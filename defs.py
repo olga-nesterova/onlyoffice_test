@@ -22,7 +22,24 @@ def correct_authorization(driver):
 		return False
 	return True
 
-#создание новой компании
+# авторизация без пароля
+def authorization_without_password(driver):
+	#переход на страницу авторизации
+	driver.get("https://olganesterova.teamlab.info/auth.aspx")
+	# ввести логин 
+	elem1 = driver.find_element_by_name("login")
+	elem1.send_keys("test@test.com")
+	elem2 = driver.find_element_by_name("pwd")
+	elem2.send_keys(Keys.RETURN)
+	try:
+		# проверка наличия ошибки на странице
+		error1 = driver.find_element_by_class_name("errorBox")
+		assert error1.is_displayed() is True
+	except NoSuchElementException:
+		return False
+	return True
+
+# создание новой компании
 def create_company(driver):
 	# перейти в модуль CRM
 	element = driver.find_elements_by_css_selector("[class='link header']")
