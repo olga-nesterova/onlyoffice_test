@@ -39,6 +39,22 @@ def authorization_without_password(driver):
 		return False
 	return True
 
+# авторизация без логина
+def authorization_without_login(driver):
+	#переход на страницу авторизации
+	driver.get("https://olganesterova.teamlab.info/auth.aspx")
+	# ввести логин 
+	elem2 = driver.find_element_by_name("pwd")
+	elem2.send_keys("test")
+	elem2.send_keys(Keys.RETURN)
+	try:
+		# проверка наличия ошибки на странице
+		error1 = driver.find_element_by_class_name("errorBox")
+		assert error1.is_displayed() is True
+	except NoSuchElementException:
+		return False
+	return True
+
 # создание новой компании
 def create_company(driver):
 	# перейти в модуль CRM
